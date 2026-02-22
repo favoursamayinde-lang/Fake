@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>System Access...</title>
+<style>
+    body {
+        margin: 0;
+        background: black;
+        color: #00ff00;
+        font-family: monospace;
+        font-size: 20px;
+        padding: 20px;
+    }
+
+    #terminal {
+        white-space: pre-line;
+    }
+
+    .cursor {
+        display: inline-block;
+        width: 10px;
+        background: #00ff00;
+        animation: blink 1s infinite;
+    }
+
+    @keyframes blink {
+        0% { opacity: 1; }
+        50% { opacity: 0; }
+        100% { opacity: 1; }
+    }
+</style>
+</head>
+<body>
+
+<div id="terminal"></div>
+
+<!-- Optional typing sound -->
+<audio id="typeSound" src="https://www.soundjay.com/mechanical/keyboard-1.mp3"></audio>
+
+<script>
+const messages = [
+    "Accessing crush database...",
+    "Scanning emotional archives...",
+    "Feelings detected...",
+    "Analyzing compatibility...",
+    "",
+    "❤️ RESULT: Someone has a HUGE crush on you ❤️"
+];
+
+const terminal = document.getElementById("terminal");
+const sound = document.getElementById("typeSound");
+
+let messageIndex = 0;
+let charIndex = 0;
+
+function typeMessage() {
+    if (messageIndex < messages.length) {
+        if (charIndex < messages[messageIndex].length) {
+            terminal.innerHTML += messages[messageIndex].charAt(charIndex);
+            charIndex++;
+            sound.currentTime = 0;
+            sound.play().catch(() => {});
+            setTimeout(typeMessage, 40);
+        } else {
+            terminal.innerHTML += "\n";
+            messageIndex++;
+            charIndex = 0;
+            setTimeout(typeMessage, 800);
+        }
+    }
+}
+
+typeMessage();
+</script>
+
+</body>
+</html>
